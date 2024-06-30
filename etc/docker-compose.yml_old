@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+
+  #  list of models to run locally: https://ollama.com/library
+  #
+  #  wsl --list --online
+  #  apt install docker.io
+  #  sudo usermod -aG docker ${USER}
+  #  sudo chmod 666 /var/run/docker.sock
+  #
+  #  ollama run pki3
+  #
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - .:/code
+      - ./ollama:/root/.ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    networks:
+      - ollama-docker
+
+networks:
+  ollama-docker:
+    external: false
